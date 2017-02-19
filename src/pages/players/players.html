@@ -1,17 +1,21 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Spieler
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            Spieler
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
     <ion-item>
-      <ion-icon name="ionic" item-left></ion-icon>
-      @ionicframework
+        <ion-label floating>Spieler hinzufügen</ion-label>
+        <ion-input [(ngModel)]="newPlayerName" (keyup.enter)="addPlayer()"></ion-input>
     </ion-item>
-  </ion-list>
+
+    <ion-list>
+        <ion-item *ngFor="let player of allPlayers">
+            <ion-checkbox [(ngModel)]="player.selected" (ionChange)="updatePlayers()"></ion-checkbox>
+            <ion-label>{{player.name}}</ion-label>
+        </ion-item>
+    </ion-list>
 </ion-content>

@@ -1,17 +1,35 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Paarungen</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Paarungen</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+    <p>Anzahl ausgewählte Spieler: {{selectedPlayers.length}}</p>
+
+    <ion-select [(ngModel)]="numberOfCourts">
+        <ion-option [value]="2">2 Plätze</ion-option>
+        <ion-option [value]="3">3 Plätze</ion-option>
+        <ion-option [value]="4">4 Plätze</ion-option>
+    </ion-select>
+    <br>
+    <button ion-button (click)="shuffle()">Shuffle!</button>
+
+    <fieldset *ngFor="let i of courts">
+        <legend>Platz {{i + 1}}</legend>
+        <ion-list>
+            <ion-item *ngFor="let player of getPlayersPerCourt(i)">
+                {{player.name}}
+            </ion-item>
+        </ion-list>
+    </fieldset>
+
+    <fieldset *ngIf="getPlayersForTheBench().length" class="bench">
+        <legend>Bank</legend>
+        <ion-list>
+            <ion-item *ngFor="let player of getPlayersForTheBench()">
+                {{player.name}}
+            </ion-item>
+        </ion-list>
+    </fieldset>
 </ion-content>
