@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { PlayerService } from '../../services/player.service';
 import { Player } from '../../models/player';
 
@@ -14,14 +14,13 @@ export class MatchesPage {
     selectedPlayers: Player[] = [];
     shuffledPlayers: Player[] = [];
 
-    constructor(public navCtrl: NavController, private playerService: PlayerService) {
+    constructor(public navCtrl: NavController, public events: Events, private playerService: PlayerService) {
+        this.events.subscribe('initMatches', () => {
+            this.refreshSelectedPlayers();
+        });
     }
 
     ngOnInit() {
-        this.refreshSelectedPlayers();
-    }
-
-    init() {
         this.refreshSelectedPlayers();
     }
 
