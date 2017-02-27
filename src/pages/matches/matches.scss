@@ -1,19 +1,33 @@
 page-matches {
-  p,
-  ion-select,
-  button,
-  fieldset {
-    margin: 10px 0;
-  }
+    p,
+    ion-select,
+    button,
+    fieldset {
+        margin: 10px 0;
+    }
 
-  fieldset {
-    margin-bottom: 25px;
-    padding-top: 0;
-    padding-bottom: 5px;
-    width: 150px;
-  }
+    fieldset {
+        height: 160px;
+        margin-bottom: 25px;
+        padding-top: 0;
+        padding-bottom: 5px;
+        width: 160px;
 
-  fieldset.bench {
-    border: none;
-  }
+        &.bench {
+            border: none;
+            padding-left: 0;
+        }
+
+        ion-list.list {
+            margin-bottom: 11px;
+
+            ion-item.item {
+                min-height: unset;
+
+                ion-label.label {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
 }
