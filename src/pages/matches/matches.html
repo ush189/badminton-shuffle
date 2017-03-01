@@ -24,10 +24,10 @@
         </ion-list>
     </fieldset>
 
-    <fieldset *ngIf="getPlayersForTheBench().length" class="bench">
+    <fieldset *ngIf="playersForBench.length" class="bench">
         <legend>Bank</legend>
         <ion-list no-lines>
-            <ion-item *ngFor="let player of getPlayersForTheBench()">
+            <ion-item *ngFor="let player of playersForBench">
                 {{player.name}}
             </ion-item>
         </ion-list>

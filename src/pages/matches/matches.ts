@@ -13,6 +13,7 @@ export class MatchesPage {
     courts: number[] = [];
     selectedPlayers: Player[] = [];
     shuffledPlayers: Player[] = [];
+    playersForBench: Player[] = [];
 
     constructor(public navCtrl: NavController, public events: Events, private playerService: PlayerService) {
         this.events.subscribe('initMatches', () => {
@@ -35,6 +36,8 @@ export class MatchesPage {
         // create array with numberOfCourts elements to iterate over it with *ngFor
         this.courts = Array.from({length: this.numberOfCourts}, (v, k) => k);
         console.log('courts', this.courts);
+
+        this.playersForBench = this.getPlayersForTheBench();
     }
 
     getPlayersPerCourt(court) {
