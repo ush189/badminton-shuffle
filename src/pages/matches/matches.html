@@ -7,13 +7,15 @@
 <ion-content padding>
     <p>Anzahl ausgewählte Spieler: {{selectedPlayers.length}}</p>
 
-    <ion-select [(ngModel)]="numberOfCourts">
-        <ion-option [value]="2">2 Plätze</ion-option>
-        <ion-option [value]="3">3 Plätze</ion-option>
-        <ion-option [value]="4">4 Plätze</ion-option>
-    </ion-select>
-    <br>
-    <button ion-button (click)="shuffle()">Shuffle!</button>
+    <ion-item no-lines class="select-courts">
+        <ion-select [(ngModel)]="numberOfCourts">
+            <ion-option [value]="2">2 Plätze</ion-option>
+            <ion-option [value]="3">3 Plätze</ion-option>
+            <ion-option [value]="4">4 Plätze</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <br><button ion-button (click)="shuffle()" class="shuffle">Shuffle!</button>
 
     <fieldset *ngFor="let i of courts">
         <legend>Platz {{i + 1}}</legend>
