@@ -41,11 +41,21 @@ export class MatchesPage {
     }
 
     getPlayersPerCourt(court) {
-        return this.shuffledPlayers.slice(court * 4, court === 0 ? 4 : court * 8);
+        let playersPerCourt = this.shuffledPlayers.slice(court * 4, court === 0 ? 4 : court * 8);
+
+        if (playersPerCourt.length % 2) {
+            playersPerCourt.pop();
+        }
+
+        return playersPerCourt;
     }
 
     getPlayersForTheBench() {
-        let numberOfBenchPlayers = this.selectedPlayers.length - this.numberOfCourts * 4;
+        let numberOfBenchPlayers = Math.max(this.selectedPlayers.length - this.numberOfCourts * 4, 0);
+
+        if (this.selectedPlayers.length < this.numberOfCourts * 4) {
+            numberOfBenchPlayers += this.selectedPlayers.length % 2;
+        }
 
         return this.shuffledPlayers.slice(this.selectedPlayers.length - numberOfBenchPlayers);
     }
