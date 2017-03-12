@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import { Player } from '../models/player';
+
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PlayerService {
 
-    constructor() {
+    constructor(private http: Http) {
     }
 
     getAllPlayers(): Promise<Player[]> {
@@ -29,5 +32,16 @@ export class PlayerService {
 
     updatePlayers(players): void {
         localStorage['players'] = JSON.stringify(players);
+    }
+
+    loadFromGoogleDocs() {
+        this.http.get('https://fetch-badminton-data.herokuapp.com/badminton')
+            .toPromise()
+            .then(function(data) {
+                console.log(data);
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
     }
 }

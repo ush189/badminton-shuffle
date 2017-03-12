@@ -34,4 +34,8 @@ export class PlayersPage {
     updatePlayers() {
         this.playerService.updatePlayers(this.allPlayers);
     }
+
+    loadFromGoogleDocs() {
+        this.playerService.loadFromGoogleDocs();
+    }
 }
