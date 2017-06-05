@@ -1,9 +1,14 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { MatchesPage } from '../pages/matches/matches';
 import { PlayersPage } from '../pages/players/players';
 import { TabsPage } from '../pages/tabs/tabs';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
     declarations: [
@@ -13,6 +18,8 @@ import { TabsPage } from '../pages/tabs/tabs';
         TabsPage
     ],
     imports: [
+        HttpModule,
+        BrowserModule,
         IonicModule.forRoot(MyApp)
     ],
     bootstrap: [IonicApp],
@@ -22,6 +29,10 @@ import { TabsPage } from '../pages/tabs/tabs';
         PlayersPage,
         TabsPage
     ],
-    providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+    providers: [
+        StatusBar,
+        SplashScreen,
+        {provide: ErrorHandler, useClass: IonicErrorHandler}
+    ]
 })
 export class AppModule {}
