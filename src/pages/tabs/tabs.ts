@@ -10,8 +10,8 @@ import { PlayersPage } from '../players/players';
 export class TabsPage {
     // this tells the tabs component which Pages
     // should be each tab's root Page
-    tab1Root: any = MatchesPage;
-    tab2Root: any = PlayersPage;
+    tab1Root: any = PlayersPage;
+    tab2Root: any = MatchesPage;
 
     constructor(public events: Events) {
     }
