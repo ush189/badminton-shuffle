@@ -36,6 +36,7 @@ export class PlayersPage {
     }
 
     loadFromGoogleDocs() {
-        this.playerService.loadFromGoogleDocs();
+        this.playerService.loadFromGoogleDocs()
+            .then(loadedPlayers => this.allPlayers = loadedPlayers);
     }
 }

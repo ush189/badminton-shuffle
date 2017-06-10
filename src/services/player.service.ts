@@ -21,29 +21,50 @@ export class PlayerService {
         return this.getAllPlayers()
             .then(allPlayers => {
                 return allPlayers.filter(player => player.selected);
-            })
+            });
     }
 
     addPlayer(player: Player): void {
         this.getAllPlayers().then(allPlayers => {
             allPlayers.push(player);
             localStorage.setItem('players', JSON.stringify(allPlayers));
-        })
+        });
     }
 
     updatePlayers(players): void {
         localStorage['players'] = JSON.stringify(players);
     }
 
-    loadFromGoogleDocs(): void {
+    loadFromGoogleDocs(): Promise<Player[]> {
+        let that = this;
+        let loadedPlayers;
+
         // TODO loading animation
-        this.http.get('https://fetch-badminton-data.herokuapp.com/badminton')
+        return this.http.get('https://fetch-badminton-data.herokuapp.com/badminton')
             .toPromise()
             .then(function(res: Response) {
                 let data = res.json();
 
-                let players = parsePlayers(data);
-                // TODO process result
+                loadedPlayers = _.pickBy(parsePlayers(data), function(player) {
+                    return player.isActive;
+                });
+
+                return that.getAllPlayers();
+            }).then(playersOfList => {
+                let mergedPlayers = playersOfList.map(function(playerOfList) {
+                    if (_.find(loadedPlayers, function(loadedPlayer) {
+                        return playerOfList.name === loadedPlayer.firstName + ' ' + loadedPlayer.lastName
+                    })) {
+                        playerOfList.selected = true;
+                    } else {
+                        playerOfList.selected = false;
+                    }
+
+                    return playerOfList;
+                });
+
+                that.updatePlayers(mergedPlayers);
+                return Promise.resolve(mergedPlayers);
             })
             .catch(function(error) {
                 console.log(error);
