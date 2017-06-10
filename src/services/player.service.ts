@@ -45,20 +45,12 @@ export class PlayerService {
             .then(function(res: Response) {
                 let data = res.json();
 
-                loadedPlayers = _.pickBy(parsePlayers(data), function(player) {
-                    return player.isActive;
-                });
+                loadedPlayers = _.pickBy(parsePlayers(data), player => player.isActive);
 
                 return that.getAllPlayers();
             }).then(playersOfList => {
-                let mergedPlayers = playersOfList.map(function(playerOfList) {
-                    if (_.find(loadedPlayers, function(loadedPlayer) {
-                        return playerOfList.name === loadedPlayer.firstName + ' ' + loadedPlayer.lastName
-                    })) {
-                        playerOfList.selected = true;
-                    } else {
-                        playerOfList.selected = false;
-                    }
+                let mergedPlayers = playersOfList.map(playerOfList => {
+                    playerOfList.selected = _.find(loadedPlayers, loadedPlayer => playerOfList.name === loadedPlayer.firstName + ' ' + loadedPlayer.lastName);
 
                     return playerOfList;
                 });
@@ -73,17 +65,17 @@ export class PlayerService {
         function parsePlayers(data) {
             let rows = [];
 
-            _.forEach(data.feed.entry, function(entry) {
+            _.forEach(data.feed.entry, entry => {
                 if (!_.isArray(rows[entry['gs$cell']['row']])) {
                     rows[entry['gs$cell']['row']] = [];
                 }
                 rows[entry['gs$cell']['row']].push(entry);
             });
 
-            let prettyRows = _.map(rows, function(row) {
+            let prettyRows = _.map(rows, row => {
                 let result = <any>{};
 
-                _.forEach(row, function(entry) {
+                _.forEach(row, entry => {
                     switch (entry['gs$cell']['col']) {
                         case '2':
                             result.firstName = entry['content']['$t'];
