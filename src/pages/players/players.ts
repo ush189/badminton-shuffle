@@ -11,6 +11,7 @@ import { Player } from '../../models/player';
 export class PlayersPage {
     allPlayers: Player[] = [];
     newPlayerName: string = '';
+    isLoading: boolean = false;
 
     constructor(public navCtrl: NavController, private playerService: PlayerService) {
     }
@@ -36,7 +37,11 @@ export class PlayersPage {
     }
 
     loadFromGoogleDocs() {
+        this.isLoading = true;
         this.playerService.loadFromGoogleDocs()
-            .then(loadedPlayers => this.allPlayers = loadedPlayers);
+            .then(loadedPlayers => {
+                this.allPlayers = loadedPlayers;
+                this.isLoading = false;
+            });
     }
 }

@@ -39,7 +39,6 @@ export class PlayerService {
         let that = this;
         let loadedPlayers;
 
-        // TODO loading animation
         return this.http.get('https://fetch-badminton-data.herokuapp.com/badminton')
             .toPromise()
             .then(function(res: Response) {

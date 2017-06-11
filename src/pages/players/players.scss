@@ -1,3 +1,16 @@
 page-players {
+    .load-from-google {
+        button {
+            vertical-align: middle;
+        }
 
+        ion-spinner {
+            display: none;
+            vertical-align: middle;
+        }
+
+        ion-spinner.loading {
+            display: inline-block;
+        }
+    }
 }

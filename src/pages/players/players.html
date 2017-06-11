@@ -19,5 +19,9 @@
         </ion-item>
     </ion-list>
 
-    <br><button ion-button (click)="loadFromGoogleDocs()">von Google-Docs laden</button>
+    <br>
+    <div class="load-from-google">
+        <button ion-button (click)="loadFromGoogleDocs()" [disabled]="isLoading">von Google-Docs laden</button>
+        <ion-spinner [ngClass]="{'loading': isLoading}"></ion-spinner>
+    </div>
 </ion-content>
