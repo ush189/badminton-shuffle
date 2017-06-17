@@ -48,10 +48,21 @@ export class PlayerService {
 
                 return that.getAllPlayers();
             }).then(playersOfList => {
+                // compare players already in the list with the loaded ones and check or uncheck them
                 let mergedPlayers = playersOfList.map(playerOfList => {
-                    playerOfList.selected = _.find(loadedPlayers, loadedPlayer => playerOfList.name === loadedPlayer.firstName + ' ' + loadedPlayer.lastName);
+                    playerOfList.selected = !!_.find(loadedPlayers, loadedPlayer => playerOfList.name === loadedPlayer.firstName + ' ' + loadedPlayer.lastName);
 
                     return playerOfList;
+                });
+
+                // add players to the list that are loaded from google and signed up
+                _.forEach(loadedPlayers, loadedPlayer => {
+                    if(!_.find(playersOfList, playerOfList => playerOfList.name === loadedPlayer.firstName + ' ' + loadedPlayer.lastName)) {
+                        mergedPlayers.push({
+                            name: loadedPlayer.firstName + ' ' + loadedPlayer.lastName,
+                            selected: true
+                        })
+                    }
                 });
 
                 that.updatePlayers(mergedPlayers);
@@ -83,9 +94,11 @@ export class PlayerService {
                             result.lastName = entry['content']['$t'];
                             break;
                         case '4':
+                            // column for player to sign up
                             result.isActive = true;
                             break;
                         case '9':
+                            // hidden column to determine which rows are players
                             result.isPlayer = true;
                             break;
                     }
