@@ -32,6 +32,11 @@ export class PlayersPage {
         this.newPlayerName = '';
     }
 
+    removePlayer(index) {
+        this.allPlayers.splice(index, 1);
+        this.playerService.removePlayer(index);
+    }
+
     updatePlayers() {
         this.playerService.updatePlayers(this.allPlayers);
     }

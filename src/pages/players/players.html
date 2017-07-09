@@ -15,7 +15,7 @@
     <ion-list>
         <ion-item *ngFor="let player of allPlayers">
             <ion-checkbox [(ngModel)]="player.selected" (ionChange)="updatePlayers()"></ion-checkbox>
-            <ion-label>{{player.name}}</ion-label>
+            <ion-label>{{player.name}} <ion-icon name="trash" (click)="removePlayer($index)" class="remove-player"></ion-icon></ion-label>
         </ion-item>
     </ion-list>
 

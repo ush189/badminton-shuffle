@@ -31,7 +31,14 @@ export class PlayerService {
         });
     }
 
-    updatePlayers(players): void {
+    removePlayer(index: number): void {
+        this.getAllPlayers().then(allPlayers => {
+            allPlayers.splice(index, 1);
+            localStorage.setItem('players', JSON.stringify(allPlayers));
+        });
+    }
+
+    updatePlayers(players: Player[]): void {
         localStorage['players'] = JSON.stringify(players);
     }
 

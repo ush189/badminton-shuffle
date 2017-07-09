@@ -1,4 +1,16 @@
 page-players {
+    .remove-player {
+        position: absolute;
+        right: 5px;
+        padding: 10px;
+        top: 5px;
+
+        &:hover {
+            color: #FF0000;
+            cursor: pointer;
+        }
+    }
+
     .load-from-google {
         padding-left: 16px;
 
