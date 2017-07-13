@@ -3,6 +3,8 @@ import { NavController, Events } from 'ionic-angular';
 import { PlayerService } from '../../services/player.service';
 import { Player } from '../../models/player';
 
+import _ from 'lodash';
+
 @Component({
     selector: 'page-matches',
     templateUrl: 'matches.html',
@@ -57,7 +59,17 @@ export class MatchesPage {
             numberOfBenchPlayers += this.selectedPlayers.length % 2;
         }
 
-        return this.shuffledPlayers.slice(this.selectedPlayers.length - numberOfBenchPlayers);
+        let benchPlayers = this.shuffledPlayers.slice(this.selectedPlayers.length - numberOfBenchPlayers);
+        _.forEach(benchPlayers, benchPlayer => {
+            this.playerService.markPlayerAsBenched(benchPlayer);
+            _.forEach(this.selectedPlayers, player => {
+                if (_.isEqual(player, benchPlayer)) {
+                    player.benched = true;
+                }
+            })
+        });
+
+        return benchPlayers;
     }
 
     /**

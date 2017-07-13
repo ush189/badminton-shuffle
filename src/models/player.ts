@@ -1,4 +1,5 @@
 export interface Player {
     name: string,
-    selected: boolean
+    selected: boolean,
+    benched: boolean
 }

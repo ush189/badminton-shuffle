@@ -24,7 +24,8 @@ export class PlayersPage {
     addPlayer() {
         let newPlayer = {
             name: this.newPlayerName,
-            selected: true
+            selected: true,
+            benched: false
         };
 
         this.allPlayers.push(newPlayer);

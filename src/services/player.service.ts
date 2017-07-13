@@ -42,6 +42,18 @@ export class PlayerService {
         localStorage['players'] = JSON.stringify(players);
     }
 
+    markPlayerAsBenched(playerToBench: Player): void {
+        this.getAllPlayers()
+            .then(allPlayers => {
+                _.forEach(allPlayers, player => {
+                    if (_.isEqual(player, playerToBench)) {
+                        player.benched = true;
+                    }
+                });
+                this.updatePlayers(allPlayers);
+            });
+    }
+
     loadFromGoogleDocs(): Promise<Player[]> {
         let that = this;
         let loadedPlayers;
@@ -64,10 +76,11 @@ export class PlayerService {
 
                 // add players to the list that are loaded from google and signed up
                 _.forEach(loadedPlayers, loadedPlayer => {
-                    if(!_.find(playersOfList, playerOfList => playerOfList.name === loadedPlayer.firstName + ' ' + loadedPlayer.lastName)) {
+                    if (!_.find(playersOfList, playerOfList => playerOfList.name === loadedPlayer.firstName + ' ' + loadedPlayer.lastName)) {
                         mergedPlayers.push({
                             name: loadedPlayer.firstName + ' ' + loadedPlayer.lastName,
-                            selected: true
+                            selected: true,
+                            benched: false
                         })
                     }
                 });
