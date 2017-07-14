@@ -103,7 +103,12 @@ export class PlayerService {
             });
 
             let prettyRows = _.map(rows, row => {
-                let result = <any>{};
+                let result = {
+                    firstName: '',
+                    lastName: '',
+                    isActive: false,
+                    isPlayer: false
+                };
 
                 _.forEach(row, entry => {
                     switch (entry['gs$cell']['col']) {
