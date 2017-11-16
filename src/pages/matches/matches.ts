@@ -43,7 +43,9 @@ export class MatchesPage {
     }
 
     getPlayersPerCourt(court) {
-        let playersPerCourt = this.shuffledPlayers.slice(court * 4, court === 0 ? 4 : court * 8);
+        let playersPerCourt = this.shuffledPlayers
+            .filter(player => !player.isBenchNow)
+            .slice(court * 4, court === 0 ? 4 : court * 8);
 
         if (playersPerCourt.length % 2) {
             playersPerCourt.pop();
@@ -59,12 +61,29 @@ export class MatchesPage {
             numberOfBenchPlayers += this.selectedPlayers.length % 2;
         }
 
-        let benchPlayers = this.shuffledPlayers.slice(this.selectedPlayers.length - numberOfBenchPlayers);
+        let playersNotOnBenchYet = this.shuffledPlayers.filter(player => !player.benched);
+        let benchPlayers = playersNotOnBenchYet.slice(playersNotOnBenchYet.length - numberOfBenchPlayers);
+
+        if (benchPlayers.length < numberOfBenchPlayers) {
+            let playersOnBenchYet = this.shuffledPlayers.filter(player => player.benched);
+            benchPlayers = benchPlayers.concat(playersOnBenchYet.slice(playersOnBenchYet.length - (numberOfBenchPlayers - benchPlayers.length)));
+
+            // reset benched players
+            this.playerService.resetBenchedPlayers();
+            _.forEach(this.selectedPlayers, player => {
+                player.benched = false;
+            });
+        }
+
         _.forEach(benchPlayers, benchPlayer => {
             this.playerService.markPlayerAsBenched(benchPlayer);
+
             _.forEach(this.selectedPlayers, player => {
                 if (_.isEqual(player, benchPlayer)) {
                     player.benched = true;
+                    player.isBenchNow = true;
+                } else {
+                    player.isBenchNow = false;
                 }
             })
         });

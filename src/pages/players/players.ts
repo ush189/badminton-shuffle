@@ -25,7 +25,8 @@ export class PlayersPage {
         let newPlayer = {
             name: this.newPlayerName,
             selected: true,
-            benched: false
+            benched: false,
+            isBenchNow: false
         };
 
         this.allPlayers.push(newPlayer);

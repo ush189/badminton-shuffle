@@ -54,6 +54,16 @@ export class PlayerService {
             });
     }
 
+    resetBenchedPlayers(): void {
+        this.getAllPlayers()
+            .then(allPlayers => {
+                _.forEach(allPlayers, player => {
+                    player.benched = false;
+                });
+                this.updatePlayers(allPlayers);
+            });
+    }
+
     loadFromGoogleDocs(): Promise<Player[]> {
         let that = this;
         let loadedPlayers;
@@ -80,7 +90,8 @@ export class PlayerService {
                         mergedPlayers.push({
                             name: loadedPlayer.firstName + ' ' + loadedPlayer.lastName,
                             selected: true,
-                            benched: false
+                            benched: false,
+                            isBenchNow: false
                         })
                     }
                 });
