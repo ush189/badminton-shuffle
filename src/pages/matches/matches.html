@@ -22,7 +22,7 @@
         <legend>Platz {{i + 1}}</legend>
         <ion-list no-lines>
             <ion-item *ngFor="let player of getPlayersPerCourt(i)">
-                {{player.name}} <img *ngIf="player.benched" class="benched" src="../../assets/icon/bench.png"/>
+                {{player.name}} <img *ngIf="player.benched" class="benched" src="assets/icon/bench.png"/>
             </ion-item>
         </ion-list>
     </fieldset>
@@ -31,7 +31,7 @@
         <legend>Bank</legend>
         <ion-list no-lines>
             <ion-item *ngFor="let player of playersForBench">
-                {{player.name}} <img *ngIf="player.benched" class="benched" src="../../assets/icon/bench.png"/>
+                {{player.name}} <img *ngIf="player.benched" class="benched" src="assets/icon/bench.png"/>
             </ion-item>
         </ion-list>
     </fieldset>
