@@ -16,6 +16,7 @@ export class MatchesPage {
     selectedPlayers: Player[] = [];
     shuffledPlayers: Player[] = [];
     playersForBench: Player[] = [];
+    playersPerCourt: Player[][];
 
     constructor(public navCtrl: NavController, public events: Events, private playerService: PlayerService) {
         this.events.subscribe('initMatches', () => {
@@ -40,18 +41,35 @@ export class MatchesPage {
         console.log('courts', this.courts);
 
         this.playersForBench = this.getPlayersForTheBench();
+        this.setPlayersPerCourt();
     }
 
-    getPlayersPerCourt(court) {
-        let playersPerCourt = this.shuffledPlayers
-            .filter(player => !player.isBenchNow)
-            .slice(court * 4, court === 0 ? 4 : court * 8);
+    setPlayersPerCourt() {
+        this.playersPerCourt = [];
 
-        if (playersPerCourt.length % 2) {
-            playersPerCourt.pop();
-        }
+        _.forEach(this.courts, court => {
+            let playersPerCourt = this.shuffledPlayers
+                .filter(player => !player.isBenchNow)
+                .slice(court * 4, court === 0 ? 4 : court * 8);
 
-        return playersPerCourt;
+            if (playersPerCourt.length % 2) {
+                playersPerCourt.pop();
+            }
+
+            if (playersPerCourt.length === 2) {
+                _.forEach(playersPerCourt, oneOnOnePlayer => {
+                    this.playerService.markPlayerAsOneOnOned(oneOnOnePlayer);
+
+                    _.forEach(this.selectedPlayers, player => {
+                        if (_.isEqual(player, oneOnOnePlayer)) {
+                            player.oneOnOne = true;
+                        }
+                    })
+                })
+            }
+
+            this.playersPerCourt.push(playersPerCourt);
+        });
     }
 
     getPlayersForTheBench() {

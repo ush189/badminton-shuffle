@@ -64,6 +64,18 @@ export class PlayerService {
             });
     }
 
+    markPlayerAsOneOnOned(playerToOneOnOne: Player): void {
+        this.getAllPlayers()
+            .then(allPlayers => {
+                _.forEach(allPlayers, player => {
+                    if (_.isEqual(player, playerToOneOnOne)) {
+                        player.oneOnOne = true;
+                    }
+                });
+                this.updatePlayers(allPlayers);
+            });
+    }
+
     loadFromGoogleDocs(): Promise<Player[]> {
         let that = this;
         let loadedPlayers;
@@ -91,7 +103,8 @@ export class PlayerService {
                             name: loadedPlayer.firstName + ' ' + loadedPlayer.lastName,
                             selected: true,
                             benched: false,
-                            isBenchNow: false
+                            isBenchNow: false,
+                            oneOnOne: false
                         })
                     }
                 });
