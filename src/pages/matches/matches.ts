@@ -46,15 +46,31 @@ export class MatchesPage {
 
     setPlayersPerCourt() {
         this.playersPerCourt = [];
+        let playersForCourts = this.shuffledPlayers
+            .filter(player => !player.isBenchNow);
+
+        if (playersForCourts.length % 4) {
+            // rearrange array to move players for one-on-one to the end
+            let playersNotOneOnOnedYet = playersForCourts.filter(player => !player.oneOnOne);
+            let oneOnOnePlayers = playersNotOneOnOnedYet.splice(playersNotOneOnOnedYet.length - 2);
+
+            if (oneOnOnePlayers.length < 2) {
+                let playersOneOnOnedYet = playersForCourts.filter(player => player.oneOnOne);
+                oneOnOnePlayers = oneOnOnePlayers.concat(playersOneOnOnedYet.slice(playersOneOnOnedYet.length - (2 - oneOnOnePlayers.length)));
+
+                // reset oneOnOned players
+                //this.playerService.resetOneOnOnedPlayers();
+                _.forEach(this.selectedPlayers, player => {
+                    player.oneOnOne = false;
+                });
+            }
+
+            playersForCourts = _.difference(playersForCourts, oneOnOnePlayers).concat(oneOnOnePlayers);
+        }
 
         _.forEach(this.courts, court => {
-            let playersPerCourt = this.shuffledPlayers
-                .filter(player => !player.isBenchNow)
+            let playersPerCourt = playersForCourts
                 .slice(court * 4, court === 0 ? 4 : court * 8);
-
-            if (playersPerCourt.length % 2) {
-                playersPerCourt.pop();
-            }
 
             if (playersPerCourt.length === 2) {
                 _.forEach(playersPerCourt, oneOnOnePlayer => {
