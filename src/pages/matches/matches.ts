@@ -56,7 +56,7 @@ export class MatchesPage {
 
             if (oneOnOnePlayers.length < 2) {
                 let playersOneOnOnedYet = playersForCourts.filter(player => player.oneOnOne);
-                oneOnOnePlayers = oneOnOnePlayers.concat(playersOneOnOnedYet.slice(playersOneOnOnedYet.length - (2 - oneOnOnePlayers.length)));
+                oneOnOnePlayers = oneOnOnePlayers.concat(playersOneOnOnedYet.slice(-(2 - oneOnOnePlayers.length)));
 
                 // reset oneOnOned players
                 //this.playerService.resetOneOnOnedPlayers();
@@ -100,7 +100,7 @@ export class MatchesPage {
 
         if (benchPlayers.length < numberOfBenchPlayers) {
             let playersOnBenchYet = this.shuffledPlayers.filter(player => player.benched);
-            benchPlayers = benchPlayers.concat(playersOnBenchYet.slice(playersOnBenchYet.length - (numberOfBenchPlayers - benchPlayers.length)));
+            benchPlayers = benchPlayers.concat(playersOnBenchYet.slice(-(numberOfBenchPlayers - benchPlayers.length)));
 
             // reset benched players
             this.playerService.resetBenchedPlayers();
