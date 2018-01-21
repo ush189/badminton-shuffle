@@ -12,6 +12,16 @@ page-matches {
 
     button.shuffle {
         margin-left: 0;
+        vertical-align: middle;
+    }
+
+    ion-spinner {
+        display: none;
+        vertical-align: middle;
+    }
+
+    ion-spinner.loading {
+        display: inline-block;
     }
 
     fieldset {
@@ -20,6 +30,10 @@ page-matches {
         padding-top: 0;
         padding-bottom: 5px;
         width: 225px;
+
+        &.loading {
+            opacity: 0.5;
+        }
 
         &.bench {
             border: none;

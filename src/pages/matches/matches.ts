@@ -17,6 +17,7 @@ export class MatchesPage {
     shuffledPlayers: Player[] = [];
     playersForBench: Player[] = [];
     playersPerCourt: Player[][];
+    isLoading: boolean = false;
 
     constructor(public navCtrl: NavController, public events: Events, private playerService: PlayerService) {
         this.events.subscribe('initMatches', () => {
@@ -34,6 +35,8 @@ export class MatchesPage {
     }
 
     shuffle() {
+        this.isLoading = true;
+
         this.shuffledPlayers = this.shuffleArray(this.selectedPlayers.slice(0));
 
         // create array with numberOfCourts elements to iterate over it with *ngFor
@@ -42,6 +45,10 @@ export class MatchesPage {
 
         this.playersForBench = this.getPlayersForTheBench();
         this.setPlayersPerCourt();
+
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 250);
     }
 
     setPlayersPerCourt() {
