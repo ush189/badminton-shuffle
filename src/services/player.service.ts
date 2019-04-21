@@ -80,7 +80,7 @@ export class PlayerService {
         let that = this;
         let loadedPlayers;
 
-        return this.http.get('https://fetch-badminton-data.herokuapp.com/badminton')
+        return this.http.get('http://9d0296e.online-server.cloud:3001/badminton')
             .toPromise()
             .then(function(res: Response) {
                 let data = res.json();
